@@ -1,0 +1,19 @@
+@import '~semantic-ui-css/semantic.css';
+
+.ui {
+  &.header {
+    &.title {
+      font-size: 4em;
+      font-weight: normal;
+    }
+    &.subtitle {
+      font-size: 1.7em;
+      font-weight: normal;
+    }
+  }
+  &.segment {
+    &.footer {
+      padding: 2em 0;
+    }
+  }
+}

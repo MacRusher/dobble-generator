@@ -1,25 +1,37 @@
 {
   "name": "dobble-generator",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "start": "BROWSER=none react-scripts start",
+    "build": "react-scripts build",
+    "test": "run-s test:*",
+    "test:ts": "tsc --noEmit",
+    "test:tslint": "tslint -p .",
+    "test:prettier": "prettier -l src/**/*.{ts,tsx}",
+    "fix": "run-s fix:*",
+    "fix:tslint": "tslint -p . --fix",
+    "fix:prettier": "prettier --write src/**/*.{ts,tsx}"
+  },
   "dependencies": {
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "semantic-ui-css": "2.4.1",
+    "semantic-ui-react": "0.86.0"
+  },
+  "devDependencies": {
     "@types/jest": "24.0.11",
-    "@types/node": "11.13.4",
+    "@types/node": "11.13.5",
     "@types/react": "16.8.13",
     "@types/react-dom": "16.8.4",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "node-sass": "4.11.0",
+    "npm-run-all": "4.1.5",
+    "prettier": "1.17.0",
     "react-scripts": "2.1.8",
+    "tslint": "5.16.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-react": "4.0.0",
     "typescript": "3.4.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": [
     ">0.2%",
