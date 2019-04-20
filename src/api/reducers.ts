@@ -1,7 +1,7 @@
-import { Actions, LOAD_EXAMPLES, UPLOAD_IMAGES } from './types';
+import { Actions, APPEND_IMAGES, CardImage, REMOVE_ALL } from './types';
 
 export interface State {
-  images: string[];
+  images: CardImage[];
 }
 
 const initialState: State = {
@@ -10,11 +10,11 @@ const initialState: State = {
 
 export default function(state = initialState, action: Actions): State {
   switch (action.type) {
-    case 'UPLOAD_IMAGES':
+    case APPEND_IMAGES:
       return {
-        images: [],
+        images: [...(state.images || []), ...action.payload],
       };
-    case 'LOAD_EXAMPLES':
+    case REMOVE_ALL:
       return {
         images: [],
       };

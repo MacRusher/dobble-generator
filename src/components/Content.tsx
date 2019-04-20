@@ -12,13 +12,10 @@ import {
 
 import { loadExamples, removeAll, uploadImages } from '../api/actions';
 import { State } from '../api/store';
-
-import cat from '../images/animals/cat.png';
-import cow from '../images/animals/cow.png';
-import horse from '../images/animals/horse.png';
+import { CardImage } from '../api/types';
 
 interface Props {
-  images: string[];
+  images: CardImage[];
   loadExamples: typeof loadExamples;
   uploadImages: typeof uploadImages;
   removeAll: typeof removeAll;
@@ -45,20 +42,26 @@ const Content: FC<Props> = ({
       </Button.Group>
     </Divider>
     <Segment basic textAlign="center">
-      {JSON.stringify(images)}
       <Image.Group size="tiny">
-        <Image src={cat} />
-        <Image src={horse} />
-        <Image src={cow} />
+        {images.map(image => (
+          <Image key={image.id} src={image.base64src} />
+        ))}
       </Image.Group>
-      <Button onClick={removeAll}>
-        <Icon name="trash" />
-        Remove all images
-      </Button>
+      {images.length > 0 && (
+        <Button onClick={removeAll}>
+          <Icon name="trash" />
+          Remove all images
+        </Button>
+      )}
     </Segment>
     <Segment textAlign="center" raised>
-      <Progress percent={20} attached="bottom" color="blue" />
-      There must be at least XX images (x more) to generate the cards.
+      <Progress
+        percent={(images.length / 57) * 100}
+        attached="bottom"
+        color="blue"
+      />
+      There must be at least 57 images ({57 - images.length} more) to generate
+      the cards.
     </Segment>
   </Container>
 );

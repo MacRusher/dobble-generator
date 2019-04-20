@@ -1,13 +1,20 @@
 // Possible redux action types
-export const UPLOAD_IMAGES = 'UPLOAD_IMAGES';
+export const APPEND_IMAGES = 'APPEND_IMAGES';
 export const LOAD_EXAMPLES = 'LOAD_EXAMPLES';
 export const REMOVE_ALL = 'REMOVE_ALL';
+export const UPLOAD_IMAGES = 'UPLOAD_IMAGES';
 
 // Payload types
+export interface CardImage {
+  base64src: string;
+  id: string;
+  title?: string;
+}
 
 // Action types
-interface UploadImagesAction {
-  type: typeof UPLOAD_IMAGES;
+interface AppendImages {
+  type: typeof APPEND_IMAGES;
+  payload: CardImage[];
 }
 
 interface LoadExamplesAction {
@@ -17,5 +24,12 @@ interface LoadExamplesAction {
 interface RemoveAllAction {
   type: typeof REMOVE_ALL;
 }
+interface UploadImagesAction {
+  type: typeof UPLOAD_IMAGES;
+}
 
-export type Actions = UploadImagesAction | LoadExamplesAction | RemoveAllAction;
+export type Actions =
+  | AppendImages
+  | LoadExamplesAction
+  | RemoveAllAction
+  | UploadImagesAction;

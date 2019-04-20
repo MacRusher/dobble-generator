@@ -10,4 +10,5 @@ rules:
   no-console: false
   no-shadowed-variable: false
   no-submodule-imports: false
+  object-literal-sort-keys: false
   ordered-imports: true
