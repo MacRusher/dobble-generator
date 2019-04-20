@@ -12,6 +12,11 @@ export const removeAll = () => ({
   type: types.REMOVE_ALL,
 });
 
+export const removeImage = (id: string) => ({
+  type: types.REMOVE_IMAGE,
+  payload: id,
+});
+
 export const uploadImages = () => ({
   type: types.UPLOAD_IMAGES,
 });

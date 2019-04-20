@@ -10,22 +10,29 @@ import {
   Segment,
 } from 'semantic-ui-react';
 
-import { loadExamples, removeAll, uploadImages } from '../api/actions';
+import {
+  loadExamples,
+  removeAll,
+  removeImage,
+  uploadImages,
+} from '../api/actions';
 import { State } from '../api/store';
 import { CardImage } from '../api/types';
 
 interface Props {
   images: CardImage[];
   loadExamples: typeof loadExamples;
-  uploadImages: typeof uploadImages;
   removeAll: typeof removeAll;
+  removeImage: typeof removeImage;
+  uploadImages: typeof uploadImages;
 }
 
 const Content: FC<Props> = ({
   images,
-  removeAll,
-  uploadImages,
   loadExamples,
+  removeAll,
+  removeImage,
+  uploadImages,
 }) => (
   <Container className="content">
     <Divider horizontal>
@@ -43,8 +50,13 @@ const Content: FC<Props> = ({
     </Divider>
     <Segment basic textAlign="center">
       <Image.Group size="tiny">
-        {images.map(image => (
-          <Image key={image.id} src={image.base64src} />
+        {images.map(({ id, base64src }) => (
+          <Image
+            key={id}
+            src={base64src}
+            onClick={() => removeImage(id)}
+            className="preview"
+          />
         ))}
       </Image.Group>
       {images.length > 0 && (
@@ -68,5 +80,5 @@ const Content: FC<Props> = ({
 
 export default connect(
   (state: State) => ({ images: state.images }),
-  { removeAll, loadExamples, uploadImages },
+  { removeAll, loadExamples, uploadImages, removeImage },
 )(Content);

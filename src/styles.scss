@@ -31,10 +31,15 @@
       padding: 2em 0;
     }
   }
-
   &.buttons {
     .or {
       text-transform: none;
+    }
+  }
+
+  &.image {
+    &.preview {
+      cursor: url(./images/ui/remove-cursor.png), auto;
     }
   }
 }
