@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react';
 
 const HeaderComponent = () => (
-  <Segment inverted textAlign="center" style={{ padding: '3em 0em' }} vertical>
+  <Segment inverted textAlign="center" vertical className="header">
     <Container text>
       <Header
         as="h1"
@@ -16,14 +16,6 @@ const HeaderComponent = () => (
         inverted
         className="subtitle"
       />
-      <Button primary size="huge">
-        <Icon name="cloud upload" />
-        Upload your images
-      </Button>
-      <Button size="huge" basic inverted>
-        <Icon name="images outline" />
-        Load example images
-      </Button>
     </Container>
   </Segment>
 );

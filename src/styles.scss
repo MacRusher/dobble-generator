@@ -1,5 +1,15 @@
 @import '~semantic-ui-css/semantic.css';
 
+#root {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  .content {
+    flex: 1
+  }
+}
+
 .ui {
   &.header {
     &.title {
@@ -12,8 +22,17 @@
     }
   }
   &.segment {
+    &.header {
+      padding: 3em 0;
+    }
     &.footer {
       padding: 2em 0;
+    }
+  }
+
+  &.buttons {
+    .or {
+      text-transform: none;
     }
   }
 }
