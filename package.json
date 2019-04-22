@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "homepage" : "https://macrusher.github.io/dobble-generator",
+  "license": "MIT",
   "scripts": {
     "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
