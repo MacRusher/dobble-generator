@@ -6,7 +6,6 @@ import {
   Divider,
   Icon,
   Image,
-  Progress,
   Segment,
 } from 'semantic-ui-react';
 
@@ -27,14 +26,14 @@ interface Props {
   uploadImages: typeof uploadImages;
 }
 
-const Content: FC<Props> = ({
+const Files: FC<Props> = ({
   images,
   loadExamples,
   removeAll,
   removeImage,
   uploadImages,
 }) => (
-  <Container className="content">
+  <Container className="pusher">
     <Divider horizontal>
       <Button.Group size="huge">
         <Button primary as="label" htmlFor="fileUpload">
@@ -48,6 +47,7 @@ const Content: FC<Props> = ({
         </Button>
       </Button.Group>
     </Divider>
+
     <input
       type="file"
       id="fileUpload"
@@ -56,6 +56,7 @@ const Content: FC<Props> = ({
       style={{ display: 'none' }}
       accept=".png,.jpg,.jpeg"
     />
+
     <Segment basic textAlign="center">
       <Image.Group size="tiny">
         {images.map(({ id, base64src, title }) => (
@@ -76,19 +77,10 @@ const Content: FC<Props> = ({
         </Button>
       )}
     </Segment>
-    <Segment textAlign="center" raised>
-      <Progress
-        percent={(images.length / 57) * 100}
-        attached="bottom"
-        color="blue"
-      />
-      There must be at least 57 images ({57 - images.length} more) to generate
-      the cards.
-    </Segment>
   </Container>
 );
 
 export default connect(
   (state: State) => ({ images: state.images }),
   { removeAll, loadExamples, uploadImages, removeImage },
-)(Content);
+)(Files);

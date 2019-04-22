@@ -1,13 +1,15 @@
 import React from 'react';
 
-import Content from './Content';
+import Files from './Files';
 import Footer from './Footer';
 import Header from './Header';
+import Summary from './Summary';
 
 const App = () => (
   <>
     <Header />
-    <Content />
+    <Files />
+    <Summary />
     <Footer />
   </>
 );

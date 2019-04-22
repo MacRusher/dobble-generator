@@ -5,7 +5,7 @@
   min-height: 100vh;
   flex-direction: column;
 
-  .content {
+  .pusher {
     flex: 1
   }
 }
@@ -19,6 +19,10 @@
     &.subtitle {
       font-size: 1.7em;
       font-weight: normal;
+    }
+    &.instructions {
+      font-weight: normal;
+      margin: 1em 0;
     }
   }
   &.segment {
@@ -36,7 +40,11 @@
       text-transform: none;
     }
   }
-
+  &.divider {
+    &.horizontal.padded {
+      margin: 2em 0;
+    }
+  }
   &.image {
     &.preview {
       cursor: url(./images/ui/remove-cursor.png), auto;
