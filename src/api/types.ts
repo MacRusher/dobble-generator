@@ -13,26 +13,27 @@ export interface CardImage {
 }
 
 // Action types
-interface AppendImages {
+export interface AppendImages {
   type: typeof APPEND_IMAGES;
   payload: CardImage[];
 }
 
-interface LoadExamplesAction {
+export interface LoadExamplesAction {
   type: typeof LOAD_EXAMPLES;
 }
 
-interface RemoveAllAction {
+export interface RemoveAllAction {
   type: typeof REMOVE_ALL;
 }
 
-interface RemoveImageAction {
+export interface RemoveImageAction {
   type: typeof REMOVE_IMAGE;
   payload: string;
 }
 
-interface UploadImagesAction {
+export interface UploadImagesAction {
   type: typeof UPLOAD_IMAGES;
+  payload: File[];
 }
 
 export type Actions =

@@ -37,7 +37,7 @@ const Content: FC<Props> = ({
   <Container className="content">
     <Divider horizontal>
       <Button.Group size="huge">
-        <Button primary onClick={uploadImages}>
+        <Button primary as="label" htmlFor="fileUpload">
           <Icon name="cloud upload" />
           Upload images
         </Button>
@@ -48,14 +48,24 @@ const Content: FC<Props> = ({
         </Button>
       </Button.Group>
     </Divider>
+    <input
+      type="file"
+      id="fileUpload"
+      onChange={e => uploadImages(e.target.files)}
+      multiple
+      style={{ display: 'none' }}
+      accept=".png,.jpg,.jpeg"
+    />
     <Segment basic textAlign="center">
       <Image.Group size="tiny">
-        {images.map(({ id, base64src }) => (
+        {images.map(({ id, base64src, title }) => (
           <Image
             key={id}
             src={base64src}
             onClick={() => removeImage(id)}
             className="preview"
+            title={title}
+            alt={title}
           />
         ))}
       </Image.Group>

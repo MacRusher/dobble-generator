@@ -2,13 +2,31 @@ import shuffle from 'lodash/shuffle';
 import uniqueId from 'lodash/uniqueId';
 import { createLogic, Logic } from 'redux-logic';
 
-import { appendImages, removeAll } from './actions';
-import { CardImage, LOAD_EXAMPLES, UPLOAD_IMAGES } from './types';
-
 import exampleFiles from '../images/exampleFiles.json';
+
+import { appendImages, removeAll } from './actions';
+import { fileToDataUrl } from './lib';
+import {
+  CardImage,
+  LOAD_EXAMPLES,
+  UPLOAD_IMAGES,
+  UploadImagesAction,
+} from './types';
 
 export const uploadImages = createLogic({
   type: UPLOAD_IMAGES,
+  async process({ action }: { action: UploadImagesAction }, dispatch, done) {
+    const images: CardImage[] = await Promise.all(
+      action.payload.map(async image => ({
+        base64src: await fileToDataUrl(image),
+        id: uniqueId('image_'),
+        title: image.name,
+      })),
+    );
+
+    dispatch(appendImages(images));
+    done();
+  },
 });
 
 export const loadExamples = createLogic({
@@ -20,7 +38,7 @@ export const loadExamples = createLogic({
     const images: CardImage[] = await Promise.all(
       shuffle(exampleFiles).map(async file => ({
         base64src: (await import(`../images/${file}`)).default,
-        id: uniqueId('exampleImage_'),
+        id: uniqueId('image_'),
         title: file,
       })),
     );

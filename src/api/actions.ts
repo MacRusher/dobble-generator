@@ -17,6 +17,7 @@ export const removeImage = (id: string) => ({
   payload: id,
 });
 
-export const uploadImages = () => ({
+export const uploadImages = (files: FileList | null) => ({
   type: types.UPLOAD_IMAGES,
+  payload: files ? [...files] : [],
 });

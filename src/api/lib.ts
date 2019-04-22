@@ -14,3 +14,11 @@ export const generateCards = (n: number) => {
     ]),
   ];
 };
+
+export const fileToDataUrl = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => resolve(reader.result as string);
+    reader.readAsDataURL(file);
+  });
