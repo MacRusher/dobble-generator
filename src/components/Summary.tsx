@@ -11,6 +11,7 @@ import {
   Segment,
 } from 'semantic-ui-react';
 
+import { generatePdf } from '../api/actions';
 import { plains } from '../api/lib';
 import { State } from '../api/store';
 import { CardImage } from '../api/types';
@@ -18,9 +19,10 @@ import { CardImage } from '../api/types';
 interface Props {
   images: CardImage[];
   plains: typeof plains;
+  generatePdf: typeof generatePdf;
 }
 
-const Summary: FC<Props> = ({ images, plains }) => {
+const Summary: FC<Props> = ({ images, plains, generatePdf }) => {
   const count = images.length;
 
   const i = findLastIndex(plains, ({ symbols }) => count >= symbols);
@@ -59,7 +61,11 @@ const Summary: FC<Props> = ({ images, plains }) => {
                 </Header.Subheader>
               )}
             </Header>
-            <Button size="massive" positive>
+            <Button
+              size="massive"
+              positive
+              onClick={() => generatePdf(activePlain.n)}
+            >
               <Icon name="file pdf outline" />
               Generate and download PDF file
             </Button>
@@ -84,6 +90,7 @@ const Summary: FC<Props> = ({ images, plains }) => {
   );
 };
 
-export default connect((state: State) => ({ images: state.images, plains }))(
-  Summary,
-);
+export default connect(
+  (state: State) => ({ images: state.images, plains }),
+  { generatePdf },
+)(Summary);

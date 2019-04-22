@@ -1,23 +1,44 @@
-import * as types from './types';
+import {
+  APPEND_IMAGES,
+  AppendImagesAction,
+  CardImage,
+  GENERATE_PDF,
+  GeneratePdfAction,
+  LOAD_EXAMPLES,
+  LoadExamplesAction,
+  Prime,
+  REMOVE_ALL,
+  REMOVE_IMAGE,
+  RemoveAllAction,
+  RemoveImageAction,
+  UPLOAD_IMAGES,
+  UploadImagesAction,
+} from './types';
 
-export const appendImages = (images: types.CardImage[]) => ({
-  type: types.APPEND_IMAGES,
+export const appendImages = (images: CardImage[]): AppendImagesAction => ({
+  type: APPEND_IMAGES,
   payload: images,
 });
-export const loadExamples = () => ({
-  type: types.LOAD_EXAMPLES,
+
+export const generatePdf = (n: Prime): GeneratePdfAction => ({
+  type: GENERATE_PDF,
+  payload: { n },
 });
 
-export const removeAll = () => ({
-  type: types.REMOVE_ALL,
+export const loadExamples = (): LoadExamplesAction => ({
+  type: LOAD_EXAMPLES,
 });
 
-export const removeImage = (id: string) => ({
-  type: types.REMOVE_IMAGE,
+export const removeAll = (): RemoveAllAction => ({
+  type: REMOVE_ALL,
+});
+
+export const removeImage = (id: string): RemoveImageAction => ({
+  type: REMOVE_IMAGE,
   payload: id,
 });
 
-export const uploadImages = (files: FileList | null) => ({
-  type: types.UPLOAD_IMAGES,
+export const uploadImages = (files: FileList | null): UploadImagesAction => ({
+  type: UPLOAD_IMAGES,
   payload: files ? [...files] : [],
 });

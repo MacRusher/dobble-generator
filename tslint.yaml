@@ -8,7 +8,7 @@ rules:
   jsx-boolean-value: [true, never]
   jsx-no-lambda: false
   jsx-space-before-trailing-slash: true
-  no-console: false
+  # no-console: false
   no-shadowed-variable: false
   no-submodule-imports: false
   object-literal-sort-keys: false

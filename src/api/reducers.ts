@@ -1,14 +1,10 @@
 import {
   Actions,
   APPEND_IMAGES,
-  CardImage,
   REMOVE_ALL,
   REMOVE_IMAGE,
+  State,
 } from './types';
-
-export interface State {
-  images: CardImage[];
-}
 
 const initialState: State = {
   images: [],
