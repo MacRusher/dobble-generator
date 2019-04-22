@@ -7,7 +7,7 @@ import { createLogic, Logic } from 'redux-logic';
 
 import exampleFiles from '../images/exampleFiles.json';
 
-import { appendImages, removeAll } from './actions';
+import { appendImages, generatePdfComplete, removeAll } from './actions';
 import { fileToDataUrl, generateCards, getImageRatio } from './lib';
 import {
   CardImage,
@@ -176,6 +176,7 @@ export const generatePdf = createLogic({
       window.open(URL.createObjectURL(pdf.output('blob')));
     }
 
+    dispatch(generatePdfComplete());
     done();
   },
 });

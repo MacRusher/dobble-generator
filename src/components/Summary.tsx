@@ -19,10 +19,11 @@ import { CardImage } from '../api/types';
 interface Props {
   images: CardImage[];
   plains: typeof plains;
+  processing: boolean;
   generatePdf: typeof generatePdf;
 }
 
-const Summary: FC<Props> = ({ images, plains, generatePdf }) => {
+const Summary: FC<Props> = ({ images, plains, processing, generatePdf }) => {
   const count = images.length;
 
   const i = findLastIndex(plains, ({ symbols }) => count >= symbols);
@@ -64,9 +65,10 @@ const Summary: FC<Props> = ({ images, plains, generatePdf }) => {
             <Button
               size="massive"
               positive
+              disabled={processing}
               onClick={() => generatePdf(activePlain.n)}
             >
-              <Icon name="file pdf outline" />
+              <Icon loading={processing} name="file pdf outline" />
               Generate and download PDF file
             </Button>
           </>
@@ -91,6 +93,10 @@ const Summary: FC<Props> = ({ images, plains, generatePdf }) => {
 };
 
 export default connect(
-  (state: State) => ({ images: state.images, plains }),
+  (state: State) => ({
+    images: state.images,
+    plains,
+    processing: state.processing,
+  }),
   { generatePdf },
 )(Summary);

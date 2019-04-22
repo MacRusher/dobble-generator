@@ -3,7 +3,9 @@ import {
   AppendImagesAction,
   CardImage,
   GENERATE_PDF,
+  GENERATE_PDF_COMPLETE,
   GeneratePdfAction,
+  GeneratePdfCompleteAction,
   LOAD_EXAMPLES,
   LoadExamplesAction,
   Prime,
@@ -23,6 +25,10 @@ export const appendImages = (images: CardImage[]): AppendImagesAction => ({
 export const generatePdf = (n: Prime): GeneratePdfAction => ({
   type: GENERATE_PDF,
   payload: { n },
+});
+
+export const generatePdfComplete = (): GeneratePdfCompleteAction => ({
+  type: GENERATE_PDF_COMPLETE,
 });
 
 export const loadExamples = (): LoadExamplesAction => ({

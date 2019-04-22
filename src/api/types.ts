@@ -1,11 +1,13 @@
 // Redux store state
 export interface State {
   images: CardImage[];
+  processing: boolean;
 }
 
 // Possible redux action types
 export const APPEND_IMAGES = 'APPEND_IMAGES';
 export const GENERATE_PDF = 'GENERATE_PDF';
+export const GENERATE_PDF_COMPLETE = 'GENERATE_PDF_COMPLETE';
 export const LOAD_EXAMPLES = 'LOAD_EXAMPLES';
 export const REMOVE_ALL = 'REMOVE_ALL';
 export const REMOVE_IMAGE = 'REMOVE_IMAGE';
@@ -34,6 +36,10 @@ export interface GeneratePdfAction {
   };
 }
 
+export interface GeneratePdfCompleteAction {
+  type: typeof GENERATE_PDF_COMPLETE;
+}
+
 export interface LoadExamplesAction {
   type: typeof LOAD_EXAMPLES;
 }
@@ -55,6 +61,7 @@ export interface UploadImagesAction {
 export type Actions =
   | AppendImagesAction
   | GeneratePdfAction
+  | GeneratePdfCompleteAction
   | LoadExamplesAction
   | RemoveAllAction
   | RemoveImageAction
