@@ -14,7 +14,7 @@
     
     
 ## Disclaimer
-This site is not affiliated in any way with Dobble, Spot It!, its creators or distributors.
+This app is not affiliated in any way with Dobble, Spot It!, its creators or distributors.
 Dobble and Spot It! are trademarks of ASMODEE GROUP.
 
 It was created just for fun, purely non-commercial reasons and as a proof-of-concept of the mathematics behind the game.

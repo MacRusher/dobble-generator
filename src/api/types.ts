@@ -23,6 +23,14 @@ export interface CardImage {
   title?: string;
 }
 
+export interface CardSymbol {
+  image: CardImage;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 // Action types
 export interface AppendImagesAction {
   type: typeof APPEND_IMAGES;
