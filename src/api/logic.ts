@@ -60,16 +60,20 @@ export const generatePdfLogic = createLogic({
     const images: CardImage[] = getState().images;
 
     // Unlock the thread before heavy computations starts
-    await sleep(10);
+    await sleep(100);
 
-    const pdf = await generatePdf(images, action.payload);
+    const pdf = await generatePdf(images, action.payload).catch(err =>
+      alert(err.message),
+    );
 
-    if (process.env.NODE_ENV === 'production') {
-      // Force file download
-      await pdf.save('Cards.pdf', { returnPromise: true });
-    } else {
-      // Easier mode to preview during development
-      window.open(URL.createObjectURL(pdf.output('blob')));
+    if (pdf) {
+      if (process.env.NODE_ENV === 'production') {
+        // Force file download
+        await pdf.save('Cards.pdf', { returnPromise: true });
+      } else {
+        // Easier mode to preview during development
+        window.open(URL.createObjectURL(pdf.output('blob')));
+      }
     }
 
     dispatch(generatePdfComplete());

@@ -64,10 +64,10 @@ export const sleep = (t: number = 0) => new Promise(r => setTimeout(r, t));
 /**
  * Generate PDF instance with cards
  */
-export const generatePdf = (
+export const generatePdf = async (
   images: CardImage[] = [],
   options: { n: Prime },
-): JsPDF => {
+): Promise<JsPDF> => {
   const { n } = options;
 
   // Apply images to generated card sequences
@@ -82,6 +82,7 @@ export const generatePdf = (
   const cardsPerPage = columnsPerPage * rowsPerPage;
   const columnWidth = pageWidth / columnsPerPage;
   const rowHeight = pageHeight / rowsPerPage;
+  const symbolMargin = 0.05; // Percent of card radius;
 
   const pdf = new JsPDF();
 
@@ -103,14 +104,14 @@ export const generatePdf = (
       const symbols: CardSymbol[] = [];
 
       // Brute-force it until it will look good :)
-      let k1 = 100;
+      let k1 = 500;
       while (k1-- > 0) {
         card.forEach(image => {
           let k2 = 100;
           while (k2-- > 0) {
             const size = random(
               // Try a smaller image after each iteration, up to some limit
-              Math.max((0.4 * k2) / 100, 0.2),
+              Math.max((0.4 * k2) / 100, 0.25),
               // Limit upper size for high n values
               n < 7 ? 1 : 0.6,
             );
@@ -137,10 +138,10 @@ export const generatePdf = (
             if (
               symbols.some(
                 s2 =>
-                  s.x < s2.x + s2.width &&
-                  s.x + s.width > s2.x &&
-                  s.y < s2.y + s2.height &&
-                  s.y + s.height > s2.y,
+                  s.x - symbolMargin < s2.x + s2.width &&
+                  s.x + s.width + symbolMargin > s2.x &&
+                  s.y - symbolMargin < s2.y + s2.height &&
+                  s.y + s.height + symbolMargin > s2.y,
               )
             ) {
               continue;
