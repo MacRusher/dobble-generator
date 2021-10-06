@@ -80,7 +80,9 @@ const Files: FC<Props> = ({
   </Container>
 );
 
-export default connect(
-  (state: State) => ({ images: state.images }),
-  { removeAll, loadExamples, uploadImages, removeImage },
-)(Files);
+export default connect((state: State) => ({ images: state.images }), {
+  removeAll,
+  loadExamples,
+  uploadImages,
+  removeImage,
+})(Files);
