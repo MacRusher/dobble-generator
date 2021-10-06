@@ -4,6 +4,11 @@
     "lib": [
       "dom",
       "dom.iterable",
+      "es2015",
+      "es2016",
+      "es2017",
+      "es2018",
+      "es2019",
       "esnext"
     ],
     "downlevelIteration": true,
@@ -18,7 +23,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"
