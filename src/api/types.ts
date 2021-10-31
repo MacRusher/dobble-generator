@@ -29,6 +29,7 @@ export interface CardSymbol {
   y: number;
   width: number;
   height: number;
+  rotation: number;
 }
 
 // Action types
