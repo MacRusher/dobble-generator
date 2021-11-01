@@ -18,6 +18,8 @@ import {
 import { State } from '../api/store';
 import { CardImage } from '../api/types';
 
+import Settings from './Settings';
+
 interface Props {
   images: CardImage[];
   loadExamples: typeof loadExamples;
@@ -71,10 +73,13 @@ const Files: FC<Props> = ({
         ))}
       </Image.Group>
       {images.length > 0 && (
-        <Button onClick={removeAll}>
-          <Icon name="trash" />
-          Remove all images
-        </Button>
+        <>
+          <Button onClick={removeAll}>
+            <Icon name="trash" />
+            Remove all images
+          </Button>
+          <Settings />
+        </>
       )}
     </Segment>
   </Container>

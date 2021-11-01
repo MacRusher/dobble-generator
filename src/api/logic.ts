@@ -57,12 +57,12 @@ export const generatePdfLogic = createLogic({
     dispatch,
     done,
   ) {
-    const images: CardImage[] = getState().images;
+    const { settings, images } = getState();
 
     // Unlock the thread before heavy computations starts
     await sleep(100);
 
-    const pdf = await generatePdf(images, action.payload).catch(err =>
+    const pdf = await generatePdf(images, { ...settings, ...action.payload }).catch(err =>
       alert(err.message),
     );
 
