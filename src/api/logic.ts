@@ -3,7 +3,6 @@ import uniqueId from 'lodash/uniqueId';
 import { createLogic, Logic } from 'redux-logic';
 
 import exampleFiles from '../images/exampleFiles.json';
-
 import { appendImages, generatePdfComplete, removeAll } from './actions';
 import { fileToDataUrl, generatePdf, getImageRatio, sleep } from './lib';
 import {
@@ -62,14 +61,15 @@ export const generatePdfLogic = createLogic({
     // Unlock the thread before heavy computations starts
     await sleep(100);
 
-    const pdf = await generatePdf(images, { ...settings, ...action.payload }).catch(err =>
-      alert(err.message),
-    );
+    const pdf = await generatePdf(images, {
+      ...settings,
+      ...action.payload,
+    }).catch((err: Error) => alert(err.message));
 
     if (pdf) {
       if (process.env.NODE_ENV === 'production') {
         // Force file download
-        await pdf.save('Cards.pdf', { returnPromise: true });
+        pdf.save('Cards.pdf', { returnPromise: true });
       } else {
         // Easier mode to preview during development
         window.open(URL.createObjectURL(pdf.output('blob')));
@@ -89,7 +89,8 @@ export const loadExamplesLogic = createLogic({
 
     const images: CardImage[] = await Promise.all(
       shuffle(exampleFiles).map(async file => {
-        const base64src = (await import(`../images/${file}`)).default;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const base64src = (await import(`../images/${file}`)).default as string;
         return {
           base64src,
           id: uniqueId('image_'),

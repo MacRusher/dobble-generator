@@ -21,14 +21,11 @@ const formSchema = createBridge({
 });
 
 interface Props {
-  settings: Settings,
+  settings: Settings;
   setSettings: typeof setSettings;
 }
 
-const SettingsComponent: FC<Props> = ({
-                                        settings,
-                                        setSettings,
-                                      }) => {
+const SettingsComponent: FC<Props> = ({ settings, setSettings }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -39,7 +36,7 @@ const SettingsComponent: FC<Props> = ({
       dimmer="blurring"
       trigger={
         <Button>
-          <Icon name="cog"/>
+          <Icon name="cog" />
           Settings
         </Button>
       }
@@ -49,17 +46,21 @@ const SettingsComponent: FC<Props> = ({
         <AutoForm
           schema={formSchema}
           model={settings}
-          onSubmit={(model) => {
+          onSubmit={model => {
             setSettings(model);
             setOpen(false);
           }}
         />
-        <Message success header="Tips:" list={[
-          'Page sizes and card radius are in millimeters',
-          'Symbol margin is a percentage of a symbol that should be left as a margin between other symbols',
-          'If you rotate symbols, the margin value should be negative to allow overlap since rotated symbols are smaller',
-          'Experiment and see what fit best for your pictures!'
-        ]}/>
+        <Message
+          success
+          header="Tips:"
+          list={[
+            'Page sizes and card radius are in millimeters',
+            'Symbol margin is a percentage of a symbol that should be left as a margin between other symbols',
+            'If you rotate symbols, the margin value should be negative to allow overlap since rotated symbols are smaller',
+            'Experiment and see what fit best for your pictures!',
+          ]}
+        />
       </Modal.Content>
     </Modal>
   );
