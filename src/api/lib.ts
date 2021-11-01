@@ -1,10 +1,12 @@
+import Ajv, { SchemaObject } from 'ajv';
 import Jimp from 'jimp';
 import JsPDF from 'jspdf';
 import chunk from 'lodash/chunk';
 import random from 'lodash/random';
 import shuffle from 'lodash/shuffle';
+import { JSONSchemaBridge } from 'uniforms-bridge-json-schema';
 
-import { CardImage, CardSymbol, Prime } from './types';
+import { CardImage, CardSymbol, Prime, Settings } from './types';
 
 /**
  * Generate supported plains (dimensions) according to the Ray-Chaudhuri–Wilson theorem
@@ -67,23 +69,26 @@ export const sleep = (t: number = 0) => new Promise(r => setTimeout(r, t));
  */
 export const generatePdf = async (
   images: CardImage[] = [],
-  options: { n: Prime },
+  options: { n: Prime } & Settings,
 ): Promise<JsPDF> => {
-  const { n } = options;
+  const {
+    n, // No of plains
+    pageWidth = 210, // A4
+    pageHeight = 297, // A4
+    cardRadius = 42, // Size of a single card
+    symbolMargin = -0.1, // Percent of card radius; value is negative to allow overlap since rotated symbols are smaller
+    rotateSymbols = true, // Whether the symbols should be randomly rotated
+  } = options;
 
   // Apply images to generated card sequences
   const cards = generateCards(n).map(card => card.map(s => images[s]));
 
   // PDF sizes in mm
-  const pageWidth = 210; // A4
-  const pageHeight = 297; // A4
-  const cardRadius = 42; // Size of a single card
   const columnsPerPage = Math.floor(pageWidth / (cardRadius * 2));
   const rowsPerPage = Math.floor(pageHeight / (cardRadius * 2));
   const cardsPerPage = columnsPerPage * rowsPerPage;
   const columnWidth = pageWidth / columnsPerPage;
   const rowHeight = pageHeight / rowsPerPage;
-  const symbolMargin = -0.1; // Percent of card radius; value is negative to allow overlap since rotated symbols are smaller
 
   const pdf = new JsPDF();
 
@@ -101,7 +106,9 @@ export const generatePdf = async (
 
       // Add symbols to pdf
       for (let s of symbols) {
-        s = await rotateSymbol(s);
+        if (rotateSymbols) {
+          s = await rotateSymbol(s);
+        }
         pdf.addImage(
           s.image.base64src,
           'PNG',
@@ -111,7 +118,7 @@ export const generatePdf = async (
           cardRadius * s.height,
           s.image.id,
           'NONE',
-          0
+          0,
         )
       }
     }
@@ -223,3 +230,17 @@ function getCardMiddle(i: number, columnWidth: number, rowHeight: number): { x: 
   }
 }
 
+export function createBridge(schema: SchemaObject): JSONSchemaBridge {
+  const ajv = new Ajv({ allErrors: true, useDefaults: true });
+
+  function createValidator(schema: SchemaObject) {
+    const validator = ajv.compile(schema);
+
+    return (model: object) => {
+      validator(model);
+      return validator.errors?.length ? { details: validator.errors } : null;
+    };
+  }
+
+  return new JSONSchemaBridge(schema, createValidator(schema));
+}

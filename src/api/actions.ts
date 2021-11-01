@@ -13,6 +13,9 @@ import {
   REMOVE_IMAGE,
   RemoveAllAction,
   RemoveImageAction,
+  SET_SETTINGS,
+  SetSettingsAction,
+  Settings,
   UPLOAD_IMAGES,
   UploadImagesAction,
 } from './types';
@@ -47,4 +50,9 @@ export const removeImage = (id: string): RemoveImageAction => ({
 export const uploadImages = (files: FileList | null): UploadImagesAction => ({
   type: UPLOAD_IMAGES,
   payload: files ? [...files] : [],
+});
+
+export const setSettings = (settings: Partial<Settings>): SetSettingsAction => ({
+  type: SET_SETTINGS,
+  payload: settings,
 });

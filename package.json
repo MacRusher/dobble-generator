@@ -23,6 +23,7 @@
     }
   },
   "dependencies": {
+    "ajv": "8.6.3",
     "jimp": "0.16.1",
     "jspdf": "2.3.1",
     "lodash": "4.17.21",
@@ -34,7 +35,10 @@
     "redux-logic": "3.0.3",
     "rxjs": "7.3.0",
     "semantic-ui-css": "2.4.1",
-    "semantic-ui-react": "2.0.3"
+    "semantic-ui-react": "2.0.3",
+    "uniforms": "3.6.2",
+    "uniforms-bridge-json-schema": "3.6.2",
+    "uniforms-semantic": "3.6.2"
   },
   "devDependencies": {
     "@types/jest": "27.0.2",
