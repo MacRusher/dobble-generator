@@ -10,7 +10,7 @@ const Footer = () => (
       Dobble and Spot It! are trademarks of ASMODEE GROUP.
       <br />
       Example images by{' '}
-      <a href="https://icons8.com/" target="_blank">
+      <a href="https://icons8.com/" target="_blank" rel="noreferrer">
         icons8.com
       </a>
     </Container>

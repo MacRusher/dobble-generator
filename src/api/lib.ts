@@ -23,7 +23,7 @@ export const plains = ([2, 3, 5, 7, 11] as Prime[]).map((n: Prime) => ({
  * Generate unique cards for available plains
  * @see https://math.stackexchange.com/questions/1303497/what-is-the-algorithm-to-generate-the-cards-in-the-game-dobble-known-as-spo
  */
-export const generateCards = (n: Prime) => {
+export const generateCards = (n: Prime): number[][] => {
   const d = [...Array(n).keys()];
 
   return shuffle([
@@ -62,7 +62,8 @@ export const getImageRatio = (dataUrl: string): Promise<number> =>
 /**
  * Unlock event loop and wait
  */
-export const sleep = (t: number = 0) => new Promise(r => setTimeout(r, t));
+export const sleep = (t = 0): Promise<never> =>
+  new Promise(r => setTimeout(r, t));
 
 /**
  * Generate PDF instance with cards
@@ -93,16 +94,18 @@ export const generatePdf = async (
   const pdf = new JsPDF();
 
   // Split cards into pages
-  for(let [page, pageCards] of chunk(cards, cardsPerPage).entries()) {
-    if (page > 0) pdf.addPage();
+  for (const [page, pageCards] of chunk(cards, cardsPerPage).entries()) {
+    if (page > 0) {
+      pdf.addPage();
+    }
 
-    for (let [i, card] of pageCards.entries()) {
-      const { x, y } = getCardMiddle(i, columnWidth, rowHeight)
+    for (const [i, card] of pageCards.entries()) {
+      const { x, y } = getCardMiddle(i, columnWidth, rowHeight);
 
       // Draw outline
       pdf.circle(x, y, cardRadius, 'S');
 
-      const symbols = arrangeSymbolsOnCard(card, symbolMargin, n)
+      const symbols = arrangeSymbolsOnCard(card, symbolMargin, n);
 
       // Add symbols to pdf
       for (let s of symbols) {
@@ -119,7 +122,7 @@ export const generatePdf = async (
           s.image.id,
           'NONE',
           0,
-        )
+        );
       }
     }
   }
@@ -127,27 +130,34 @@ export const generatePdf = async (
   return pdf;
 };
 
-const rotateSymbol = (symbol: CardSymbol) => new Promise<CardSymbol>((resolve, reject) => {
-  const image = symbol.image
-  const buffer = Buffer.from(image.base64src.split(',')[1], 'base64');
-  Jimp.read(buffer).then(jimpImage => {
-    jimpImage.rotate(symbol.rotation).getBase64("image/png", (err, base64) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve({
-          ...symbol,
-          image: {
-            ...image,
-            base64src: base64,
+const rotateSymbol = (symbol: CardSymbol) =>
+  new Promise<CardSymbol>((resolve, reject) => {
+    const image = symbol.image;
+    const buffer = Buffer.from(image.base64src.split(',')[1], 'base64');
+    void Jimp.read(buffer).then(jimpImage => {
+      jimpImage
+        .rotate(symbol.rotation)
+        .getBase64('image/png', (err, base64) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve({
+              ...symbol,
+              image: {
+                ...image,
+                base64src: base64,
+              },
+            });
           }
-        })
-      }
-    })
-  })
-})
+        });
+    });
+  });
 
-function arrangeSymbolsOnCard(card: CardImage[], symbolMargin: number, n: number) {
+function arrangeSymbolsOnCard(
+  card: CardImage[],
+  symbolMargin: number,
+  n: number,
+) {
   const symbols: CardSymbol[] = [];
   // Brute-force it until it will look good :)
   let k1 = 500;
@@ -155,12 +165,16 @@ function arrangeSymbolsOnCard(card: CardImage[], symbolMargin: number, n: number
     card.forEach(image => {
       let k2 = 100;
       while (k2-- > 0) {
-        const s = getSymbolInRandomPosition(image, k2, n)
+        const s = getSymbolInRandomPosition(image, k2, n);
 
         // Test if element is within the circle
-        if (isWithinCircle(s)) continue;
+        if (isWithinCircle(s)) {
+          continue;
+        }
         // Test if there is no collision with other symbols
-        if (areThereCollisions(symbols, s, symbolMargin)) continue;
+        if (areThereCollisions(symbols, s, symbolMargin)) {
+          continue;
+        }
         // Everything ok, add it to the collection
         symbols.push(s);
         break;
@@ -183,25 +197,31 @@ function arrangeSymbolsOnCard(card: CardImage[], symbolMargin: number, n: number
   return symbols;
 }
 
-const isWithinCircle = (s: CardSymbol): Boolean => {
-  return (s.x + s.width) ** 2 + s.y ** 2 > 1 ||
+const isWithinCircle = (s: CardSymbol): boolean => {
+  return (
+    (s.x + s.width) ** 2 + s.y ** 2 > 1 ||
     (s.x + s.width) ** 2 + (s.y + s.height) ** 2 > 1 ||
     s.x ** 2 + s.y ** 2 > 1 ||
     s.x ** 2 + (s.y + s.height) ** 2 > 1
-}
+  );
+};
 
-function areThereCollisions(symbols: CardSymbol[], s: CardSymbol, symbolMargin: number) {
+function areThereCollisions(
+  symbols: CardSymbol[],
+  s: CardSymbol,
+  symbolMargin: number,
+) {
   return symbols.some(
     s2 =>
       s.x - symbolMargin < s2.x + s2.width &&
       s.x + s.width + symbolMargin > s2.x &&
       s.y - symbolMargin < s2.y + s2.height &&
       s.y + s.height + symbolMargin > s2.y,
-  )
+  );
 }
 
 function getSymbolInRandomPosition(image: CardImage, k2: number, n: number) {
-  const size = getRandomImageSize(k2, n)
+  const size = getRandomImageSize(k2, n);
 
   const s: CardSymbol = {
     x: random(-1, 1 - size, true),
@@ -211,7 +231,7 @@ function getSymbolInRandomPosition(image: CardImage, k2: number, n: number) {
     height: size * image.ratio,
     image,
   };
-  return s
+  return s;
 }
 
 function getRandomImageSize(k2: number, n: number) {
@@ -223,11 +243,15 @@ function getRandomImageSize(k2: number, n: number) {
   );
 }
 
-function getCardMiddle(i: number, columnWidth: number, rowHeight: number): { x: number; y: number; } {
+function getCardMiddle(
+  i: number,
+  columnWidth: number,
+  rowHeight: number,
+): { x: number; y: number } {
   return {
     x: (i % 2) * columnWidth + columnWidth / 2,
-    y: Math.floor(i / 2) * rowHeight + rowHeight / 2
-  }
+    y: Math.floor(i / 2) * rowHeight + rowHeight / 2,
+  };
 }
 
 export function createBridge(schema: SchemaObject): JSONSchemaBridge {
@@ -236,7 +260,7 @@ export function createBridge(schema: SchemaObject): JSONSchemaBridge {
   function createValidator(schema: SchemaObject) {
     const validator = ajv.compile(schema);
 
-    return (model: object) => {
+    return (model: Record<string, unknown>) => {
       validator(model);
       return validator.errors?.length ? { details: validator.errors } : null;
     };

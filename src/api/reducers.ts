@@ -18,10 +18,10 @@ const initialState: State = {
     cardRadius: 42, // Size of a single card
     symbolMargin: -0.1, // Percent of card radius
     rotateSymbols: true, // Whether the symbols should be randomly rotated
-  }
+  },
 };
 
-export default function(state = initialState, action: Actions): State {
+export default function reducer(state = initialState, action: Actions): State {
   switch (action.type) {
     case APPEND_IMAGES:
       return {

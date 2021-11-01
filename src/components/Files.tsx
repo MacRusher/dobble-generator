@@ -17,7 +17,6 @@ import {
 } from '../api/actions';
 import { State } from '../api/store';
 import { CardImage } from '../api/types';
-
 import Settings from './Settings';
 
 interface Props {

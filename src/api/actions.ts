@@ -52,7 +52,9 @@ export const uploadImages = (files: FileList | null): UploadImagesAction => ({
   payload: files ? [...files] : [],
 });
 
-export const setSettings = (settings: Partial<Settings>): SetSettingsAction => ({
+export const setSettings = (
+  settings: Partial<Settings>,
+): SetSettingsAction => ({
   type: SET_SETTINGS,
   payload: settings,
 });

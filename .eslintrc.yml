@@ -1,0 +1,8 @@
+extends:
+  - vazco/typescript
+
+rules:
+  '@typescript-eslint/explicit-module-boundary-types': 0
+  eslint-comments/require-description: 0
+  no-void: 0
+  valid-jsdoc: 0
