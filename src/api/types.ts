@@ -16,7 +16,7 @@ export const UPLOAD_IMAGES = 'UPLOAD_IMAGES';
 export const SET_SETTINGS = 'SET_SETTINGS';
 
 // Payload types
-export type Prime = 2 | 3 | 5 | 7 | 11;
+export type PrimePower = 2 | 3 | 4 | 5 | 7 | 8 | 9 | 11;
 
 export interface Settings {
   pageWidth: number; // Page width in mm
@@ -51,7 +51,7 @@ export interface AppendImagesAction {
 export interface GeneratePdfAction {
   type: typeof GENERATE_PDF;
   payload: {
-    n: Prime;
+    n: PrimePower;
   };
 }
 

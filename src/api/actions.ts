@@ -8,7 +8,7 @@ import {
   GeneratePdfCompleteAction,
   LOAD_EXAMPLES,
   LoadExamplesAction,
-  Prime,
+  PrimePower,
   REMOVE_ALL,
   REMOVE_IMAGE,
   RemoveAllAction,
@@ -25,7 +25,7 @@ export const appendImages = (images: CardImage[]): AppendImagesAction => ({
   payload: images,
 });
 
-export const generatePdf = (n: Prime): GeneratePdfAction => ({
+export const generatePdf = (n: PrimePower): GeneratePdfAction => ({
   type: GENERATE_PDF,
   payload: { n },
 });

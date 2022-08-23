@@ -6,24 +6,26 @@ import random from 'lodash/random';
 import shuffle from 'lodash/shuffle';
 import { JSONSchemaBridge } from 'uniforms-bridge-json-schema';
 
-import { CardImage, CardSymbol, Prime, Settings } from './types';
+import { CardImage, CardSymbol, PrimePower, Settings } from './types';
 
 /**
  * Generate supported plains (dimensions) according to the Ray-Chaudhuri–Wilson theorem
- * n - prime number
+ * n - prime power
  * @see https://math.stackexchange.com/questions/36798/what-is-the-math-behind-the-game-spot-it
  */
-export const plains = ([2, 3, 5, 7, 11] as Prime[]).map((n: Prime) => ({
-  n,
-  symbols: n ** 2 + n + 1,
-  symbolsPerCard: n + 1,
-}));
+export const plains = ([2, 3, 4, 5, 7, 8, 9, 11] as PrimePower[]).map(
+  (n: PrimePower) => ({
+    n,
+    symbols: n ** 2 + n + 1,
+    symbolsPerCard: n + 1,
+  }),
+);
 
 /**
  * Generate unique cards for available plains
  * @see https://math.stackexchange.com/questions/1303497/what-is-the-algorithm-to-generate-the-cards-in-the-game-dobble-known-as-spo
  */
-export const generateCards = (n: Prime): number[][] => {
+export const generateCards = (n: PrimePower): number[][] => {
   const d = [...Array(n).keys()];
 
   return shuffle([
@@ -70,7 +72,7 @@ export const sleep = (t = 0): Promise<never> =>
  */
 export const generatePdf = async (
   images: CardImage[] = [],
-  options: { n: Prime } & Settings,
+  options: { n: PrimePower } & Settings,
 ): Promise<JsPDF> => {
   const {
     n, // No of plains
