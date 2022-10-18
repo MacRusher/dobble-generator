@@ -69,7 +69,7 @@ export const generatePdfLogic = createLogic({
     if (pdf) {
       if (process.env.NODE_ENV === 'production') {
         // Force file download
-        pdf.save('Cards.pdf', { returnPromise: true });
+        await pdf.save('Cards.pdf', { returnPromise: true });
       } else {
         // Easier mode to preview during development
         window.open(URL.createObjectURL(pdf.output('blob')));
